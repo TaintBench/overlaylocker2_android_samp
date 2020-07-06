@@ -37,7 +37,8 @@
         "payload": true
       },
       "ID": 1,
-      "description": "This malicious flow reads the device id and uses it as the return value of the method imei() of the class MeSetting. An object of MeSetting is injected into the WebView by addJavascriptInterface. The method imei() can be invoked via JavaScript code.  "
+      "description": "This malicious flow reads the device id and uses it as the return value of the method imei() of the class MeSetting. An object of MeSetting is injected into the WebView by addJavascriptInterface. The method imei() can be invoked via JavaScript code.  ",
+      "isNegative": false
     },
     {
       "source": {
@@ -106,7 +107,8 @@
         "staticField": true
       },
       "ID": 2,
-      "description": "This malicious flow reads the device id and stores it as a field of an TelephonyInfo object. This information will be used as the return value of the method dualsim() of the class MeSystem. An object of MeSystem is injected into the WebView by addJavascriptInterface. The method dualsim() can be invoked via JavaScript code.  "
+      "description": "This malicious flow reads the device id and stores it as a field of an TelephonyInfo object. This information will be used as the return value of the method dualsim() of the class MeSystem. An object of MeSystem is injected into the WebView by addJavascriptInterface. The method dualsim() can be invoked via JavaScript code.  ",
+      "isNegative": false
     },
     {
       "source": {
@@ -143,7 +145,8 @@
         "reflection": true
       },
       "ID": 3,
-      "description": "This malicious flow uses Java Reflection to execute code which gets the service for a selected sim card. "
+      "description": "This malicious flow uses Java Reflection to execute code which gets the service for a selected sim card. ",
+      "isNegative": false
     },
     {
       "source": {
@@ -188,7 +191,8 @@
         "reflection": true
       },
       "ID": 4,
-      "description": "This malicious flow uses Java Reflection to execute code which sends SMS messages. "
+      "description": "This malicious flow uses Java Reflection to execute code which sends SMS messages. ",
+      "isNegative": false
     },
     {
       "source": {
@@ -237,7 +241,8 @@
       ],
       "attributes": {},
       "ID": 5,
-      "description": "This malicious flow reads file and sends the file to a remote server via an HTTP POST request."
+      "description": "This malicious flow reads file and sends the file to a remote server via an HTTP POST request.",
+      "isNegative": false
     },
     {
       "source": {
@@ -289,7 +294,8 @@
         "payload": true
       },
       "ID": 6,
-      "description": "This malicious flow reads file from a given path and and uses it as the return value of the method read() of the class MeFile. An object of MeFile is injected into the WebView by addJavascriptInterface. The method read() can be invoked via JavaScript code.  "
+      "description": "This malicious flow reads file from a given path and and uses it as the return value of the method read() of the class MeFile. An object of MeFile is injected into the WebView by addJavascriptInterface. The method read() can be invoked via JavaScript code.  ",
+      "isNegative": false
     },
     {
       "source": {
@@ -359,7 +365,428 @@
         "pathConstraints": true
       },
       "ID": 7,
-      "description": "This malicious flow monitors incoming SMSs."
+      "description": "This malicious flow monitors incoming SMSs.",
+      "isNegative": false
+    },
+    {
+      "source": {
+        "targetName": "getDeviceId",
+        "targetNo": 1,
+        "statement": "String deviceId = new UUID((long) (Secure.getString(context.getContentResolver(), \"android_id\")).hashCode(), (((long) (tm.getDeviceId()).hashCode()) << 32) | ((long) (tm.getSimSerialNumber()).hashCode())).toString();",
+        "methodName": "public static String getUniqueID(Context context)",
+        "className": "brandmangroupe.miui.updater.MasterPage",
+        "lineNo": 105,
+        "IRs": [
+          {
+            "type": "Jimple",
+            "IRstatement": "$r6 = virtualinvoke $r4.<android.telephony.TelephonyManager: java.lang.String getDeviceId()>()"
+          }
+        ]
+      },
+      "sink": {
+        "targetName": "addJavascriptInterface",
+        "targetNo": 1,
+        "statement": "webview.addJavascriptInterface(new MeSetting(this), \"MeSetting\");",
+        "methodName": "public void onCreate(Bundle savedInstanceState)",
+        "className": "brandmangroupe.miui.updater.MasterPage",
+        "lineNo": 61,
+        "IRs": [
+          {
+            "type": "Jimple",
+            "IRstatement": "virtualinvoke $r8.<android.webkit.WebView: void addJavascriptInterface(java.lang.Object,java.lang.String)>($r10, \"MeSetting\")"
+          }
+        ]
+      },
+      "intermediateFlows": [],
+      "description": "Negative flow.",
+      "isNegative": true,
+      "attributes": {},
+      "ID": 8
+    },
+    {
+      "source": {
+        "targetName": "getDeviceId",
+        "targetNo": 1,
+        "statement": "String deviceId = new UUID((long) (Secure.getString(context.getContentResolver(), \"android_id\")).hashCode(), (((long) (tm.getDeviceId()).hashCode()) << 32) | ((long) (tm.getSimSerialNumber()).hashCode())).toString();",
+        "methodName": "public static String getUniqueID(Context context)",
+        "className": "brandmangroupe.miui.updater.MasterPage",
+        "lineNo": 105,
+        "IRs": [
+          {
+            "type": "Jimple",
+            "IRstatement": "$r6 = virtualinvoke $r4.<android.telephony.TelephonyManager: java.lang.String getDeviceId()>()"
+          }
+        ]
+      },
+      "sink": {
+        "targetName": "addJavascriptInterface",
+        "targetNo": 1,
+        "statement": "webview.addJavascriptInterface(new MeSystem(this), \"MeSystem\");",
+        "methodName": "public void onCreate(Bundle savedInstanceState)",
+        "className": "brandmangroupe.miui.updater.MasterPage",
+        "lineNo": 62,
+        "IRs": [
+          {
+            "type": "Jimple",
+            "IRstatement": "virtualinvoke $r8.<android.webkit.WebView: void addJavascriptInterface(java.lang.Object,java.lang.String)>($r11, \"MeSystem\")"
+          }
+        ]
+      },
+      "intermediateFlows": [],
+      "description": "Negative flow.",
+      "isNegative": true,
+      "attributes": {},
+      "ID": 9
+    },
+    {
+      "source": {
+        "targetName": "getDeviceId",
+        "targetNo": 1,
+        "statement": "String deviceId = new UUID((long) (Secure.getString(context.getContentResolver(), \"android_id\")).hashCode(), (((long) (tm.getDeviceId()).hashCode()) << 32) | ((long) (tm.getSimSerialNumber()).hashCode())).toString();",
+        "methodName": "public static String getUniqueID(Context context)",
+        "className": "brandmangroupe.miui.updater.MasterPage",
+        "lineNo": 105,
+        "IRs": [
+          {
+            "type": "Jimple",
+            "IRstatement": "$r6 = virtualinvoke $r4.<android.telephony.TelephonyManager: java.lang.String getDeviceId()>()"
+          }
+        ]
+      },
+      "sink": {
+        "targetName": "addJavascriptInterface",
+        "targetNo": 1,
+        "statement": "webview.addJavascriptInterface(new MeFile(this), \"MeFile\");",
+        "methodName": "public void onCreate(Bundle savedInstanceState)",
+        "className": "brandmangroupe.miui.updater.MasterPage",
+        "lineNo": 63,
+        "IRs": [
+          {
+            "type": "Jimple",
+            "IRstatement": "virtualinvoke $r8.<android.webkit.WebView: void addJavascriptInterface(java.lang.Object,java.lang.String)>($r12, \"MeFile\")"
+          }
+        ]
+      },
+      "intermediateFlows": [],
+      "description": "Negative flow.",
+      "isNegative": true,
+      "attributes": {},
+      "ID": 10
+    },
+    {
+      "source": {
+        "targetName": "getDeviceId",
+        "targetNo": 1,
+        "statement": "String deviceId = new UUID((long) (Secure.getString(context.getContentResolver(), \"android_id\")).hashCode(), (((long) (tm.getDeviceId()).hashCode()) << 32) | ((long) (tm.getSimSerialNumber()).hashCode())).toString();",
+        "methodName": "public static String getUniqueID(Context context)",
+        "className": "brandmangroupe.miui.updater.MasterPage",
+        "lineNo": 105,
+        "IRs": [
+          {
+            "type": "Jimple",
+            "IRstatement": "$r6 = virtualinvoke $r4.<android.telephony.TelephonyManager: java.lang.String getDeviceId()>()"
+          }
+        ]
+      },
+      "sink": {
+        "targetName": "addJavascriptInterface",
+        "targetNo": 1,
+        "statement": "webview.addJavascriptInterface(new MePackage(this), \"MePackage\");",
+        "methodName": "public void onCreate(Bundle savedInstanceState)",
+        "className": "brandmangroupe.miui.updater.MasterPage",
+        "lineNo": 64,
+        "IRs": [
+          {
+            "type": "Jimple",
+            "IRstatement": "virtualinvoke $r8.<android.webkit.WebView: void addJavascriptInterface(java.lang.Object,java.lang.String)>($r13, \"MePackage\")"
+          }
+        ]
+      },
+      "intermediateFlows": [],
+      "description": "Negative flow.",
+      "isNegative": true,
+      "attributes": {},
+      "ID": 11
+    },
+    {
+      "source": {
+        "targetName": "getDeviceId",
+        "targetNo": 1,
+        "statement": "String deviceId = new UUID((long) (Secure.getString(context.getContentResolver(), \"android_id\")).hashCode(), (((long) (tm.getDeviceId()).hashCode()) << 32) | ((long) (tm.getSimSerialNumber()).hashCode())).toString();",
+        "methodName": "public static String getUniqueID(Context context)",
+        "className": "brandmangroupe.miui.updater.MasterPage",
+        "lineNo": 105,
+        "IRs": [
+          {
+            "type": "Jimple",
+            "IRstatement": "$r6 = virtualinvoke $r4.<android.telephony.TelephonyManager: java.lang.String getDeviceId()>()"
+          }
+        ]
+      },
+      "sink": {
+        "targetName": "addJavascriptInterface",
+        "targetNo": 1,
+        "statement": "webview.addJavascriptInterface(new MeContent(this), \"MeContent\");",
+        "methodName": "public void onCreate(Bundle savedInstanceState)",
+        "className": "brandmangroupe.miui.updater.MasterPage",
+        "lineNo": 65,
+        "IRs": [
+          {
+            "type": "Jimple",
+            "IRstatement": "virtualinvoke $r8.<android.webkit.WebView: void addJavascriptInterface(java.lang.Object,java.lang.String)>($r14, \"MeContent\")"
+          }
+        ]
+      },
+      "intermediateFlows": [],
+      "description": "Negative flow.",
+      "isNegative": true,
+      "attributes": {},
+      "ID": 12
+    },
+    {
+      "source": {
+        "targetName": "getDeviceId",
+        "targetNo": 1,
+        "statement": "String deviceId = new UUID((long) (Secure.getString(context.getContentResolver(), \"android_id\")).hashCode(), (((long) (tm.getDeviceId()).hashCode()) << 32) | ((long) (tm.getSimSerialNumber()).hashCode())).toString();",
+        "methodName": "public static String getUniqueID(Context context)",
+        "className": "brandmangroupe.miui.updater.MasterPage",
+        "lineNo": 105,
+        "IRs": [
+          {
+            "type": "Jimple",
+            "IRstatement": "$r6 = virtualinvoke $r4.<android.telephony.TelephonyManager: java.lang.String getDeviceId()>()"
+          }
+        ]
+      },
+      "sink": {
+        "targetName": "addJavascriptInterface",
+        "targetNo": 1,
+        "statement": "webview.addJavascriptInterface(new MeAction(this), \"MeAction\");",
+        "methodName": "public void onCreate(Bundle savedInstanceState)",
+        "className": "brandmangroupe.miui.updater.MasterPage",
+        "lineNo": 66,
+        "IRs": [
+          {
+            "type": "Jimple",
+            "IRstatement": "virtualinvoke $r8.<android.webkit.WebView: void addJavascriptInterface(java.lang.Object,java.lang.String)>($r15, \"MeAction\")"
+          }
+        ]
+      },
+      "intermediateFlows": [],
+      "description": "Negative flow.",
+      "isNegative": true,
+      "attributes": {},
+      "ID": 13
+    },
+    {
+      "source": {
+        "targetName": "getStringExtra",
+        "targetNo": 1,
+        "statement": "this.template = intent.getStringExtra(\"url\");",
+        "methodName": "public void onCreate(Bundle savedInstanceState)",
+        "className": "brandmangroupe.miui.updater.MasterPage",
+        "lineNo": 40,
+        "IRs": [
+          {
+            "type": "Jimple",
+            "IRstatement": "$r4 = virtualinvoke $r3.<android.content.Intent: java.lang.String getStringExtra(java.lang.String)>(\"url\")"
+          }
+        ]
+      },
+      "sink": {
+        "targetName": "addJavascriptInterface",
+        "targetNo": 1,
+        "statement": "webview.addJavascriptInterface(new MeSetting(this), \"MeSetting\");",
+        "methodName": "public void onCreate(Bundle savedInstanceState)",
+        "className": "brandmangroupe.miui.updater.MasterPage",
+        "lineNo": 61,
+        "IRs": [
+          {
+            "type": "Jimple",
+            "IRstatement": "virtualinvoke $r8.<android.webkit.WebView: void addJavascriptInterface(java.lang.Object,java.lang.String)>($r10, \"MeSetting\")"
+          }
+        ]
+      },
+      "intermediateFlows": [],
+      "description": "Negative flow. ",
+      "isNegative": true,
+      "attributes": {},
+      "ID": 14
+    },
+    {
+      "source": {
+        "targetName": "getStringExtra",
+        "targetNo": 1,
+        "statement": "this.template = intent.getStringExtra(\"url\");",
+        "methodName": "public void onCreate(Bundle savedInstanceState)",
+        "className": "brandmangroupe.miui.updater.MasterPage",
+        "lineNo": 40,
+        "IRs": [
+          {
+            "type": "Jimple",
+            "IRstatement": "$r4 = virtualinvoke $r3.<android.content.Intent: java.lang.String getStringExtra(java.lang.String)>(\"url\")"
+          }
+        ]
+      },
+      "sink": {
+        "targetName": "addJavascriptInterface",
+        "targetNo": 1,
+        "statement": "webview.addJavascriptInterface(new MeSystem(this), \"MeSystem\");",
+        "methodName": "public void onCreate(Bundle savedInstanceState)",
+        "className": "brandmangroupe.miui.updater.MasterPage",
+        "lineNo": 62,
+        "IRs": [
+          {
+            "type": "Jimple",
+            "IRstatement": "virtualinvoke $r8.<android.webkit.WebView: void addJavascriptInterface(java.lang.Object,java.lang.String)>($r11, \"MeSystem\")"
+          }
+        ]
+      },
+      "intermediateFlows": [],
+      "description": "Negative flow. ",
+      "isNegative": true,
+      "attributes": {},
+      "ID": 15
+    },
+    {
+      "source": {
+        "targetName": "getStringExtra",
+        "targetNo": 1,
+        "statement": "this.template = intent.getStringExtra(\"url\");",
+        "methodName": "public void onCreate(Bundle savedInstanceState)",
+        "className": "brandmangroupe.miui.updater.MasterPage",
+        "lineNo": 40,
+        "IRs": [
+          {
+            "type": "Jimple",
+            "IRstatement": "$r4 = virtualinvoke $r3.<android.content.Intent: java.lang.String getStringExtra(java.lang.String)>(\"url\")"
+          }
+        ]
+      },
+      "sink": {
+        "targetName": "addJavascriptInterface",
+        "targetNo": 1,
+        "statement": "webview.addJavascriptInterface(new MeFile(this), \"MeFile\");",
+        "methodName": "public void onCreate(Bundle savedInstanceState)",
+        "className": "brandmangroupe.miui.updater.MasterPage",
+        "lineNo": 63,
+        "IRs": [
+          {
+            "type": "Jimple",
+            "IRstatement": "virtualinvoke $r8.<android.webkit.WebView: void addJavascriptInterface(java.lang.Object,java.lang.String)>($r12, \"MeFile\")"
+          }
+        ]
+      },
+      "intermediateFlows": [],
+      "description": "Negavie flow.",
+      "isNegative": true,
+      "attributes": {},
+      "ID": 16
+    },
+    {
+      "source": {
+        "targetName": "getStringExtra",
+        "targetNo": 1,
+        "statement": "this.template = intent.getStringExtra(\"url\");",
+        "methodName": "public void onCreate(Bundle savedInstanceState)",
+        "className": "brandmangroupe.miui.updater.MasterPage",
+        "lineNo": 40,
+        "IRs": [
+          {
+            "type": "Jimple",
+            "IRstatement": "$r4 = virtualinvoke $r3.<android.content.Intent: java.lang.String getStringExtra(java.lang.String)>(\"url\")"
+          }
+        ]
+      },
+      "sink": {
+        "targetName": "addJavascriptInterface",
+        "targetNo": 1,
+        "statement": "webview.addJavascriptInterface(new MePackage(this), \"MePackage\");",
+        "methodName": "public void onCreate(Bundle savedInstanceState)",
+        "className": "brandmangroupe.miui.updater.MasterPage",
+        "lineNo": 64,
+        "IRs": [
+          {
+            "type": "Jimple",
+            "IRstatement": "virtualinvoke $r8.<android.webkit.WebView: void addJavascriptInterface(java.lang.Object,java.lang.String)>($r13, \"MePackage\")"
+          }
+        ]
+      },
+      "intermediateFlows": [],
+      "description": "Negative flow.",
+      "isNegative": true,
+      "attributes": {},
+      "ID": 17
+    },
+    {
+      "source": {
+        "targetName": "getStringExtra",
+        "targetNo": 1,
+        "statement": "this.template = intent.getStringExtra(\"url\");",
+        "methodName": "public void onCreate(Bundle savedInstanceState)",
+        "className": "brandmangroupe.miui.updater.MasterPage",
+        "lineNo": 40,
+        "IRs": [
+          {
+            "type": "Jimple",
+            "IRstatement": "$r4 = virtualinvoke $r3.<android.content.Intent: java.lang.String getStringExtra(java.lang.String)>(\"url\")"
+          }
+        ]
+      },
+      "sink": {
+        "targetName": "addJavascriptInterface",
+        "targetNo": 1,
+        "statement": "webview.addJavascriptInterface(new MeContent(this), \"MeContent\");",
+        "methodName": "public void onCreate(Bundle savedInstanceState)",
+        "className": "brandmangroupe.miui.updater.MasterPage",
+        "lineNo": 65,
+        "IRs": [
+          {
+            "type": "Jimple",
+            "IRstatement": "virtualinvoke $r8.<android.webkit.WebView: void addJavascriptInterface(java.lang.Object,java.lang.String)>($r14, \"MeContent\")"
+          }
+        ]
+      },
+      "intermediateFlows": [],
+      "description": "Negative flow.",
+      "isNegative": true,
+      "attributes": {},
+      "ID": 18
+    },
+    {
+      "source": {
+        "targetName": "getStringExtra",
+        "targetNo": 1,
+        "statement": "this.template = intent.getStringExtra(\"url\");",
+        "methodName": "public void onCreate(Bundle savedInstanceState)",
+        "className": "brandmangroupe.miui.updater.MasterPage",
+        "lineNo": 40,
+        "IRs": [
+          {
+            "type": "Jimple",
+            "IRstatement": "$r4 = virtualinvoke $r3.<android.content.Intent: java.lang.String getStringExtra(java.lang.String)>(\"url\")"
+          }
+        ]
+      },
+      "sink": {
+        "targetName": "addJavascriptInterface",
+        "targetNo": 1,
+        "statement": "webview.addJavascriptInterface(new MeAction(this), \"MeAction\");",
+        "methodName": "public void onCreate(Bundle savedInstanceState)",
+        "className": "brandmangroupe.miui.updater.MasterPage",
+        "lineNo": 66,
+        "IRs": [
+          {
+            "type": "Jimple",
+            "IRstatement": "virtualinvoke $r8.<android.webkit.WebView: void addJavascriptInterface(java.lang.Object,java.lang.String)>($r15, \"MeAction\")"
+          }
+        ]
+      },
+      "intermediateFlows": [],
+      "description": "Negative flow.",
+      "isNegative": true,
+      "attributes": {},
+      "ID": 19
     }
   ]
 }
